@@ -1,0 +1,60 @@
+#config_version=6
+
+hardware:
+  platform: tiny_pinball
+  driverboards: tiny_pinball
+
+tiny_pinball:
+  port: "/dev/tty.usbserial-110"
+
+switches:
+  s_left_flipper:
+    number: pinguin
+    tags: left_flipper
+  # s_right_flipper:
+  #   number:
+  #   tags: right_flipper
+  s_popbumper_left:
+    number: 1                 # depends on your platform
+
+coils:
+  c_flipper_left_main:
+    number: 0  # again, these numbers will probably be different for you
+  c_flipper_left_hold:
+    number: 1  # check your platform-specific documentation for the actual numbers
+    allow_enable: true
+  # c_flipper_right_main:
+  #   number: 2
+  # c_flipper_right_hold:
+  #   number: 3
+  #   allow_enable: true
+  c_popbumper_left:
+    number: 1                 # depends on your platform
+    default_pulse_ms: 23      # tune this for your machine
+
+playfields:
+  playfield:
+    tags: default
+    default_source_device: None  # use None in steps before 8
+
+flippers:
+  left_flipper:
+    main_coil: c_flipper_left_main
+    hold_coil: c_flipper_left_hold
+    activation_switch: s_left_flipper
+    enable_events: machine_reset_phase_3
+  # right_flipper:
+  #   main_coil: c_flipper_right_main
+  #   hold_coil: c_flipper_right_hold
+  #   activation_switch: s_right_flipper
+  #   enable_events: machine_reset_phase_3
+
+
+autofire_coils:
+  ac_popbumper_left:
+    coil: c_popbumper_left
+    switch: s_popbumper_left
+    power: 255
+    delay: 0
+    hold_time: 100
+    cooldown: 200
